@@ -306,6 +306,14 @@ id_raca int,
 id_escolaridade int
 );
 
+#CRIEI AS FK
+alter table clientes add constraint id_estado foreign key (id_estado) references estado (id_estado);
+alter table clientes add constraint fk_cliente_cidade foreign key (id_cidade) references cidade (id_cidade);
+alter table clientes add constraint fk_cliente_sexo foreign key (id_sexo) references sexo (id_sexo);
+alter table clientes add constraint fk_cliente_nacionalidade foreign key (id_nacionalidade) references Nacionalidade (id_nacionalidade);
+alter table clientes add constraint fk_cliente_raca foreign key (id_raca) references Raça (id_raca);
+alter table clientes add constraint fk_cliente_escolaridade foreign key (id_escolaridade) references Escolaridade (id_escolaridade);
+
 create table estado (
 id_estado int auto_increment primary key,
 Estado varchar(30)
@@ -585,3 +593,96 @@ insert into cidade values(null,'Araguaína');
 insert into cidade values(null,'Gurupi');
 insert into cidade values(null,'Porto Nacional');
 insert into cidade values(null,'Paraíso do Tocantins');
+
+############################################################
+# incluir 3 sexos 
+insert into sexo values(null,'Masculino');
+insert into sexo values(null,'Feminino');
+insert into sexo values(null,'Outro');
+
+#######################################################
+# inserir nacionalidade brasileira e estrangeira
+insert into Nacionalidade values(null,'Brasileiro(a)');
+insert into Nacionalidade values(null,'Estrangeiro(a)');
+
+#######################################################
+#inserir 5 raças
+insert into Raça values(null,'Preto');
+insert into Raça values(Null,'Pardo');
+insert into Raça values(null,'Amarelo');
+insert into Raça values(null,'Indígena');
+insert into Raça values(null,'Branco');
+
+############################################################
+#inserir 8 tipos de escolaridade
+insert into Escolaridade values (null,'Analfabeto'),
+						(null,'Fundamental Incompleto'),
+						(null,'Fundamental Completo'),
+                        (null,'Médio Incompleto'),
+                        (Null,'Médio Completo'),
+                        (Null,'Superior Incompleto'),
+                        (Null,'Superior Completo'),
+                        (Null,'Mestrado'),
+                        (null,'Doutorado');
+                        select * from Escolaridade;
+                        
+###################################################
+#20 cadastros 
+insert into clientes values ('035.106.631-44','João Carlo Freitas','1936738','67984710181',11,56,1,1,5,1);
+insert into clientes values ('256.310.620-62','Eva Pontes Almeida','111259940','67984578002',8,42,2,1,4,2);
+insert into clientes values ('965.195.180-00','Celso Donato Giacomini','407771451','67984641213',1,1,1,1,3,4);
+insert into clientes values ('239.644.370-42','Kamilla Moraes Folly','228775255','67984567899',2,7,2,1,3,6);
+insert into clientes values ('48280166190','Bianca Pinheiro Avilla','336566001','99204-6196',10,51,2,2,3,4);
+insert into clientes values ('31942382308','Agenor Viana Stutz','432821193','96939-8451',18,95,1,1,1,5);
+insert into clientes values ('46490963167','Rosali Guzzo Meyer','496632504','97549-8380',24,125,2,1,3,3);
+insert into clientes values ('55387837234','Benjamin Leal Valente','111643168','99785-1148',20,103,1,2,1,2);
+insert into clientes values ('04866116390','Theo Valente Couto','337152470','97943-5516',8,43,1,1,5,7);
+insert into clientes values ('72246262950','Gabriela Araujo Laporte','330425924','96969-2142',3,11,3,2,4,8);
+insert into clientes values ('17011447350','Armando Quintanilha Gayoso','292388226','99749-5685',15,78,1,2,5,7);
+insert into clientes values ('72136517813','Joyce Alves Biango','167806579','98432-2685',10,54,2,1,3,6);
+insert into clientes values ('77255858180','Weberson Trancoso Mesquita','157261451','98008-3569',13,67,1,1,5,8);
+insert into clientes values ('65941173784','Yuri Brum Prata','445301181','98984-9044',18,92,1,1,4,2);
+insert into clientes values ('85684513735','Ronaldo Espindola Diniz','380351419','98544-8238',7,36,1,1,4,7);
+insert into clientes values ('25866878410','Clevisson Santomauro Cosme','217811012','98758-1046',27,137,1,1,1,8);
+insert into clientes values ('41186837845','Marilena Damasceno Barcelos','324527731','99681-5885',11,59,2,2,2,2);
+insert into clientes values ('68682487179','Ryan Vabo Batista','333691945','98654-8258',10,52,3,1,4,1);
+insert into clientes values ('42353562167','Aledio Ascar Carvalho','364122341','98128-8370',11,60,1,2,3,2);
+insert into clientes values ('63387137222','Devanir Guzzo Espindola','305430397','98348-4172',24,124,1,1,4,7);
+
+select * from estado;
+select * from sexo;
+select * from cidade;
+select * from Nacionalidade;
+select * from Raça;
+select * from Escolaridade;
+select * from clientes;
+
+###########################################
+#atividades 
+# 1 - Apresentar um select apenas com o nome e a cidade
+select cl.Nome,Cidade from clientes cl inner join cidade ci on cl.id_cidade = ci.id_cidade;
+
+# 2 - Apresentar um select apenas com o nome e o estado
+select cl.Nome,Estado from clientes cl join estado es on cl.id_estado = es.id_estado;
+
+# 3 - Apresentar um select apenas com o nome, cpf e a raça
+select cl.Nome,cl.CPF,ra.raca from clientes cl join Raça ra on cl.id_raca = ra.id_raca;
+
+# 4 - Apresentar um select apenas com o nome e a nacionalidade
+select cl.Nome,nac.Nacionalidade from clientes cl join Nacionalidade nac on cl.id_nacionalidade = nac.id_nacionalidade; 
+
+# 5 - Apresentar um select apenas com o nome e a escolaridade
+select cl.Nome,esc.Escolaridade from clientes cl join Escolaridade esc on cl.id_escolaridade = esc.id_escolaridade;
+
+# 6 - Apresentar um select com nome, cidade e estado
+select cl.Nome,ci.Cidade,est.Estado from clientes cl join cidade ci on cl.id_cidade = ci.id_cidade join estado est on cl.id_estado = est.id_estado;
+
+# 7 - Apresentar um select com nome, cidade, estado, fone, rg, sexo, nacionalidade, raça, escolaridade
+select cl.Nome,ci.cidade,est.Estado,se.sexo,cl.fone,cl.rg,nac.Nacionalidade,ra.raca,esc.Escolaridade from clientes cl
+join cidade ci on ci.id_cidade = cl.id_cidade
+join estado est on est.id_estado = cl.id_estado
+join sexo se on se.id_sexo = cl.id_sexo
+join Nacionalidade nac on nac.id_nacionalidade = cl.id_nacionalidade
+join Raça as ra on ra.id_raca = cl.id_raca
+join Escolaridade esc on esc.id_escolaridade = cl.id_escolaridade;
+
